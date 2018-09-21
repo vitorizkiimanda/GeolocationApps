@@ -9,6 +9,13 @@
 
 <ion-content padding>
 
+  <h1>Status</h1>
+  <h4>time : {{timestamp}}</h4>
+  <h4 *ngIf="accuracy">accuracy : {{accuracy}} meters</h4>
+  <h4 *ngIf="altitude">altitude : {{altitude}} meters above sea level</h4>
+  <h4 *ngIf="direction">direction : {{direction}} degrees from North</h4>
+  <h4 *ngIf="speed">speed : {{speed}} m/s</h4>
+
   <h1>Current Location :</h1>
   <h4>Lat : {{lat}}</h4>
   <h4>Lat : {{long}}</h4>

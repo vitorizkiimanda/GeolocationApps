@@ -10,7 +10,12 @@ export class HomePage {
 
   lat:any = 0.0;
   long:any = 0.0;
+  timestamp:any;
   distance:any = 0.0;
+  accuracy:any = 0.0;
+  altitude:any = 0.0;
+  heading:any = 0.0;
+  speed:any = 0.0;
 
   constructor(
     public navCtrl: NavController,
@@ -22,6 +27,12 @@ export class HomePage {
     this.geolocation.getCurrentPosition().then( position  =>{
       this.lat = position.coords.latitude;
       this.long = position.coords.longitude;
+      this.accuracy = position.coords.accuracy;
+      this.altitude = position.coords.altitude;
+      this.heading = position.coords.heading;
+      this.speed = position.coords.speed;
+      this.timestamp = position.timestamp;
+      this.timestamp = new Date(this.timestamp);
     }).catch ( error => console.log(error));
   }
 
@@ -29,7 +40,7 @@ export class HomePage {
     this.geolocation.getCurrentPosition().then( position  =>{
       this.lat = position.coords.latitude;
       this.long = position.coords.longitude;
-    }).catch ( error => console.log(error));
+    }).catch ( error => alert(error));
   }
 
   getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
