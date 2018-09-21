@@ -8,11 +8,14 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <h1>Current Location :</h1>
+  <h4>Lat : {{lat}}</h4>
+  <h4>Lat : {{long}}</h4>
+  <button ion-button secondary block (click)="updateLocation()">Update Location</button>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <h1>Distance with FMIPA IPB :</h1>
+  <h4>{{distance}} km</h4>
+  <button ion-button primary block (click)="getDistanceFromLatLonInKm(lat,long,-6.5574205, 106.7314220)">Calculate Distance</button>
+  
 </ion-content>
