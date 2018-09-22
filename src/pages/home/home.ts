@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
@@ -19,11 +19,21 @@ export class HomePage {
 
   constructor(
     public navCtrl: NavController,
+    public loadingController : LoadingController,
     public geolocation: Geolocation) {
 
   }
 
   ionViewWillEnter(){
+    this.updateLocation();
+  }
+
+  updateLocation(){
+    let loading = this.loadingController.create({
+      content: 'loading..'
+  });
+
+    loading.present();
     this.geolocation.getCurrentPosition().then( position  =>{
       this.lat = position.coords.latitude;
       this.long = position.coords.longitude;
@@ -33,14 +43,11 @@ export class HomePage {
       this.speed = position.coords.speed;
       this.timestamp = position.timestamp;
       this.timestamp = new Date(this.timestamp);
-    }).catch ( error => console.log(error));
-  }
-
-  updateLocation(){
-    this.geolocation.getCurrentPosition().then( position  =>{
-      this.lat = position.coords.latitude;
-      this.long = position.coords.longitude;
-    }).catch ( error => alert(error));
+      loading.dismiss();
+    }).catch ( error => {
+      alert(error)
+      loading.dismiss();
+    });
   }
 
   getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
