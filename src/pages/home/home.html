@@ -10,17 +10,30 @@
 <ion-content padding>
 
   <h1>Status</h1>
-  <h4>time : {{timestamp}}</h4>
-  <h4 *ngIf="accuracy">accuracy : {{accuracy}} meters</h4>
-  <h4 *ngIf="altitude">altitude : {{altitude}} meters above sea level</h4>
-  <h4 *ngIf="direction">direction : {{direction}} degrees from North</h4>
-  <h4 *ngIf="speed">speed : {{speed}} m/s</h4>
+  <h5>time : {{timestamp}}</h5>
+  <h5 *ngIf="accuracy">accuracy : {{accuracy}} meters</h5>
+  <h5 *ngIf="altitude">altitude : {{altitude}} meters above sea level</h5>
+  <h5 *ngIf="direction">direction : {{direction}} degrees from North</h5>
+  <h5 *ngIf="speed">speed : {{speed}} m/s</h5>
 
   <h1>Current Location :</h1>
   <h4>Latitude : {{lat}}</h4>
   <h4>Longitude : {{long}}</h4>
   <button ion-button secondary block (click)="updateLocation()">Update Location</button>
 
+  <h1>Destination Address :</h1>
+  
+  <ion-item>
+    <ion-label floating>Address</ion-label>
+    <ion-input [(ngModel)]="destination" (ionChange)="getCoordinate()" name="destination" type="text" #dest="ngModel" spellcheck="false" autocapitalize="off"
+      required>
+    </ion-input>
+  </ion-item>
+  
+  <p ion-text [hidden]="dest.valid || submitted == false" color="danger" padding-left >
+    Destination address invalid
+  </p>
+  
   <h1>Distance with FMIPA IPB :</h1>
   <h4>{{distance}} km</h4>
   <button ion-button primary block (click)="getDistanceFromLatLonInKm(lat,long,-6.5574205, 106.7314220)">Calculate Distance</button>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 
 @Component({
   selector: 'page-home',
@@ -16,10 +17,13 @@ export class HomePage {
   altitude:any = 0.0;
   heading:any = 0.0;
   speed:any = 0.0;
+  destination:any;
+  submitted: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public loadingController : LoadingController,
+    private nativeGeocoder: NativeGeocoder,
     public geolocation: Geolocation) {
 
   }
@@ -66,6 +70,23 @@ export class HomePage {
   
   deg2rad(deg) {
     return deg * (Math.PI/180)
+  }
+
+  getCoordinate(){
+    let options: NativeGeocoderOptions = {
+      useLocale: true,
+      maxResults: 5
+    };
+
+  this.nativeGeocoder.reverseGeocode(-6.5574205, 106.7314220, options)
+    .then((result: NativeGeocoderReverseResult[]) => console.log(JSON.stringify(result[0])))
+    .catch((error: any) => console.log(error));
+
+  console.log(this.destination)
+  this.nativeGeocoder.forwardGeocode(this.destination, options)
+    .then((coordinates: any[]) => console.log(coordinates))
+    // .then((coordinates: NativeGeocoderForwardResult[]) => console.log('The coordinates are latitude=' + coordinates[0].latitude + ' and longitude=' + coordinates[0].longitude))
+    .catch((error: any) => console.log(error));
   }
 
 }
